@@ -1,36 +1,56 @@
 <script>
 pintrk('track', 'pagevisit');
 </script>
-
-<h1 id="page_title">Become a Journalist for the Teen Magazine</h1>
+<% if @intent != "work_with_reporter" %>
+  <h1 id="page_title">Become a Journalist for the Teen Magazine</h1>
+<% elsif @intent == "work_with_reporter" %>
+  <h1 id="page_title">Collaborate with a video producer from The Teen Magazine</h1>
+<% end %>
 <div class="form_wrapper wrapper_padding">
+  <% if @intent == "work_with_reporter" %>
+    <%= image_tag "video-producer", :class => "hero_apply" %>
+  <% end %>
   <%= form_for @application do |f| %>
     <span>First Name</span>
     <%= f.text_field :first_name, required: true %>
-    <br />
     <span>Last Name</span>
     <%= f.text_field :last_name, required: true %>
-    <br />
     <span>Email</span>
     <%= f.email_field :email, required: true %>
-    <br />
-    <span>Primary Category</span><br /><br />
-    <%= f.select :category, ['Academics', 'Beauty', 'DIY', 'Entertainment', 'Fashion', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'News', 'Tips & Hacks']%><br />
-    <br />
-    <br />
-    <span>Please write a short cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine journalist position.
-    </span>
-    <%= f.text_area :description, required: true %>
     <br />
     <div class="hidden">
       <%= f.label :nickname %> <br />
       <%= f.text_field :nickname %>
     </div>
-    <span>
-      Applications are accepted on a rolling basis. If accepted, you will recieve an email from our team of editors within 48 hours.
-    </span><br /><br />
+      <span>Primary Category</span>
+      <br />
+      <br />
+      <%= f.select :category, ['Academics', 'Beauty', 'DIY', 'Entertainment', 'Fashion', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'News', 'Tips & Hacks']%><br />
+      <br />
+    <% if @intent != "work_with_reporter" %>
+      <span>Please write a short cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine journalist position.
+      </span>
+      <%= f.text_area :description, required: true %>
+      <br  />
+    <% elsif @intent == "work_with_reporter" %>
+      <span>What experience do you have working with others? How would you apply those collaborative skills to working closely with a video producer on a topic?</span>
+      <%= f.text_area :collaboration, required: true %>
+      <br />
+      <span>In 200-500 words, please pitch a topic idea that teens would be interested in and would work well in an article and video. What would be covered in each the article and video, and how would you split up the content?</span>
+      <%= f.text_area :pitch, required: true %>
+    <% end %>
+    <span>Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 48 hours.</span><br /><br />
     <%= f.submit 'Submit Application' %>
   <% end %>
-  <br>
-  <br>
+  <% if @intent != "work_with_reporter" %>
+    <span>If you are interested in working with a reporter, please apply through this link:
+      <%= link_to "Work with a video producer", new_apply_path(:intent => "work_with_reporter") %> <br />*Note: your changes will not be saved</span>
+  <% else %>
+    <span>If you want to write articles but are not interested in working with a reporter, please apply through this link:
+      <%= link_to "Apply as a writer", new_apply_path() %> *Note: your changes will not be saved</span>
+  <% end %>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 </div>

@@ -407,6 +407,9 @@ footer {
   width: 80%;
   max-width: 750px;
   margin: 0 auto;
+  a {
+    color: $highlight;
+  }
 }
 
 .ranking {
@@ -1276,3 +1279,4 @@ hr {
 @import "welcome";
 @import "category";
 @import "newlayout";
+@import "applications";

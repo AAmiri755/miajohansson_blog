@@ -3,6 +3,10 @@ class AppliesController < ApplicationController
 
   def new
     @application = Apply.new
+    @intent = ""
+    if params[:intent] == "work_with_reporter"
+      @intent = "work_with_reporter"
+    end
   end
 
   def create
